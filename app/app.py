@@ -1,46 +1,26 @@
-from fastapi import FastAPI, HTTPException
-import pandas as pd
-from pydantic import BaseModel
-import os
 from datetime import datetime, timedelta
 from io import BytesIO
-from fastapi.responses import StreamingResponse
-from fastapi.middleware.cors import CORSMiddleware
-import traceback
-from utils import translate_word, generate_sentence, check_testing_gpt
 import json
-from typing import List
+import os
+import traceback
 
-class WordItem(BaseModel):
-    word: str
+import pandas as pd
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 
-
-class Settings(BaseModel):
-    api_key: str
-    model: str
-    base_url: str
-    language: str
-
-
-class TestItem(BaseModel):
-    target: str
-    user_try: str
-
-
-class Testing(BaseModel):
-    testing_array: List[TestItem]
+from utils import translate_word, generate_sentence, check_testing_gpt
+from shemas import WordItem, Settings, Testing
     
-
-
-API_KEY = ""
-MODEL = ""
-BASE_URL = ""
 CONFIG_FILE = "config.json"
-LANGUAGE = ""
 PROMPT_FILE = "prompts.json"
+DATASET_NAME = 'data.csv'
+
+
 LAST_ATTEMPT = 10
 ATTEMPT_TIME = 0
 LAST_ATTEMPT_TIME = 48 
+
 
 
 app = FastAPI()
@@ -81,12 +61,11 @@ else:
         json.dump(config_data, f, indent=4)
 
 
-DATASET_NAME = 'data.csv'
-
 if not os.path.exists(DATASET_NAME):
     df = pd.DataFrame(columns=['word', 'translate', 'count', 'sentence', 
                                'attempt', 'create_at', 'last_added_time',
                                'last_attempt_time', 'studied']).to_csv("data.csv", index=False)
+
 
 @app.get("/")
 def read_root():
