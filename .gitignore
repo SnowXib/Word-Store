@@ -1,0 +1,7 @@
+*.csv
+/myenv
+
+config.json
+
+__pycache__/
+
