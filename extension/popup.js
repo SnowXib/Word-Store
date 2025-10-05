@@ -1,15 +1,17 @@
 document.addEventListener("DOMContentLoaded", async() => {
     const output = document.getElementById("output");
-    const modal = document.getElementById("settingsModal");
+    const settingsModal = document.getElementById("settingsModal");
+    const testingModal = document.getElementById("testingModal");
     const submitBtn = document.getElementById("submit");
     const settingsBtn = document.querySelector("button.button:first-child");
+    const testingBtn = document.getElementById("testingBtn");
 
     const api_key_input = document.getElementById("api_key_input");
     const base_url_input = document.getElementById("base_url_input");
     const model_input = document.getElementById("model_input");
     const language_input = document.getElementById("language_input");
 
-    const closeBtn = modal.querySelector(".close");
+    const closeBtn = settingsModal.querySelector(".close");
 
     submitBtn.disabled = true;
 
@@ -41,10 +43,14 @@ document.addEventListener("DOMContentLoaded", async() => {
             language_input.value.trim() === ""
         ) {
             submitBtn.disabled = true;
-            output.textContent = "Все поля должны быть заполнены!";
+            if (!output.querySelector('table')) {
+                output.textContent = "Все поля должны быть заполнены!";
+            }
         } else {
             submitBtn.disabled = false;
-            output.textContent = "";
+            if (!output.querySelector('table')) {
+                output.textContent = "";
+            }
         }
     }
 
@@ -72,17 +78,21 @@ document.addEventListener("DOMContentLoaded", async() => {
         }
     });
 
+    testingBtn.addEventListener("click", () => {
+        testingModal.style.display = "flex"
+    })
+
     settingsBtn.addEventListener("click", () => {
-        modal.style.display = "flex";
+        settingsModal.style.display = "flex";
     });
 
     closeBtn.addEventListener("click", () => {
-        modal.style.display = "none";
+        settingsModal.style.display = "none";
     });
 
-    modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-            modal.style.display = "none";
+    settingsModal.addEventListener("click", (e) => {
+        if (e.target === settingsModal) {
+            settingsModal.style.display = "none";
         }
     });
 
@@ -100,6 +110,28 @@ document.addEventListener("DOMContentLoaded", async() => {
     } catch (e) {
         console.error('Error', e);
         output.textContent = 'Error';
+    }
+
+    testingBtn.addEventListener("click", async() => {
+        try {
+        const response = await fetch('http://127.0.0.1:8000/api/get-testing?count=10', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+        const testItems = await response.json();
+        createTesting(testItems)
+
+    } catch (e) {
+        console.error('Error', e);
+        output.textContent = 'Error';
+    }
+    })
+
+    function createTesting(testItems){
+        
     }
 
     function createTable(wordsData) {

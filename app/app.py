@@ -22,7 +22,6 @@ ATTEMPT_TIME = 0
 LAST_ATTEMPT_TIME = 48 
 
 
-
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
