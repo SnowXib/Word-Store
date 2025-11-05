@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Word Store",
-  "version": "1.0",
+  "version": "0.1",
   "description": "Extension for storing words",
   "icons": {
     "16": "icons/word_store_16_16.png",
