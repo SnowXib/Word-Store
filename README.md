@@ -1,5 +1,8 @@
 <img width="128" height="128" alt="Word Store Icon" src="https://github.com/user-attachments/assets/2371aecd-9443-4ef3-b5d9-8581ff7be512" align="left" />
 
+<br>
+
+
 # Word Store
 
 > Расширение для обучения новым языкам
@@ -11,6 +14,28 @@
 ![Language](https://img.shields.io/badge/Python-3.13-00ADD8)
 
 <img width="345" height="488" alt="Word Store Interface" src="https://github.com/user-attachments/assets/74333414-13a1-4532-a869-41ea1f480dfd" />
+
+---
+
+## Статус разработки
+
+### Реализовано
+- [x] Базовое расширение для Chrome
+- [x] Контекстное меню для добавления слов
+- [x] Интерфейс для отображения добавленных слов
+- [x] Интеграция с OpenAI API
+- [x] Локальный сервер на FastAPI
+- [x] Система конфигурации через config.json
+- [x] Работа кнопки Settings
+- [x] Backend тестирования 
+
+### В планах
+- [ ] Frontend тестирования
+- [ ] Frontend/Backend генерации предложений
+- [ ] Статистика обучения
+- [ ] Персонализация обучения
+- [ ] Работа расширения для firefox
+- [ ] Работа расширения для Safari
 
 ---
 
